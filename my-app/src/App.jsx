@@ -7,15 +7,15 @@ function App() {
 
   useEffect(() => {
     async function fetchUsers() {
-      const response = await fetch("https://jsonplaceholder.typicode.com/user");
+      const response = await fetch("https://jsonplaceholder.typicode.com/users");
       const data = await response.json();
       const sliced = data.slice(0, -5);
-    setAllUsers(prev => [...prev, ...sliced]);
+    setAllUsers(prev => sliced);
     }
     fetchUsers();
   }, [refreshKey]);
-   const sorted = [...allUsers].sort((a, b) => a.name - b.name);
- const filtered = sorted.filter(user => user.name.includes(query));
+   const sorted = [...allUsers].sort((a, b) => a.name.localeCompare(b.name));
+ const filtered = sorted.filter(user => user.name.toLowerCase().includes(query.toLowerCase()));
   const total = allUsers.reduce((acc, user) => acc + user.id, 0);
   const found = allUsers.find(user => user.id === 0);
 
@@ -45,7 +45,7 @@ function App() {
       <ul className="list-none p-0 m-0">
         {filtered.map(user => (
           <li key={user.id} className="py-3 border-b border-gray-200">
-            <span className="font-medium">{user.name} {user.name}</span> — {user.city}
+            <span className="font-medium">{user.name}</span> — {user.address.city}
 
           </li>
         ))}
