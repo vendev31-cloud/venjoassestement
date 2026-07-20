@@ -9,7 +9,7 @@ function App() {
     async function fetchUsers() {
       const response = await fetch("https://jsonplaceholder.typicode.com/users");
       const data = await response.json();
-      const sliced = data.slice(0, -5);
+      const sliced = data.slice(0, 5);
     setAllUsers(prev => sliced);
     }
     fetchUsers();
